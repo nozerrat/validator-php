@@ -27,7 +27,7 @@ class Validator {
       if ( defined( 'LOCALE' ) ) {
          $locale = $locale ? $locale : LOCALE;
       }
-      $dir = $dir ? $dir.$locale."/" : "lang/".$locale."/";
+      $dir = $dir ? $dir.$locale."/" : __DIR__."/../lang/".$locale."/";
       $this->messages = (array) @$_SESSION[$dir];
 
       if (@!$_SESSION[$dir]) {
