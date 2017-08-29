@@ -598,13 +598,13 @@ class Validator {
                default:
                   $no_error = !false;
                   $message = null;
-                  if(@$this->roles_created[$rol] instanceof closure) { // 'rol' => function();
+                  if(@$this->roles_created[$rol] instanceof closure || gettype(@$this->roles_created[$rol])==='object') { // 'rol' => function();
                      $no_error = $this->roles_created[$rol]($value, $param, $data, $this);
                   }
-                  elseif(@$this->roles_created[$rol][0] instanceof closure) { // 'rol' => [function()];
+                  elseif(@$this->roles_created[$rol][0] instanceof closure || gettype(@$this->roles_created[$rol][0])==='object') { // 'rol' => [function()];
                      $no_error = $this->roles_created[$rol][0]($value, $param, $data, $this);
                   }
-                  elseif(is_string(@$this->roles_created[$rol][0]) && (@$this->roles_created[$rol][1] instanceof closure)) { // 'rol' => ['message',function()];
+                  elseif(is_string(@$this->roles_created[$rol][0]) && (@$this->roles_created[$rol][1] instanceof closure || gettype(@$this->roles_created[$rol][1])==='object')) { // 'rol' => ['message',function()];
                      $message  = $this->roles_created[$rol][0];
                      $no_error = $this->roles_created[$rol][1]($value, $param, $data, $this);
                   }
@@ -628,40 +628,40 @@ class Validator {
 
 
             // se eliminará pronto.. este bloque no se le hará mas modificaciones
-                  elseif(is_array(@$this->roles_created[0])) {
-                     foreach($this->roles_created as $key_created => $rol_created) {
-                        if(@$rol_created[$rol] instanceof closure) {
-                           if(!$rol_created[$rol]($value, $param, $data, $this)) {
-                              $temp = str_replace(":attribute", $field, @$messages[$rol]);
-                              $temp = str_replace(":values", implode(',', @$param), $temp);
-                              @$temp = str_replace(":data", $value, $temp);
+                  // elseif(is_array(@$this->roles_created[0])) {
+                  //    foreach($this->roles_created as $key_created => $rol_created) {
+                  //       if(@$rol_created[$rol] instanceof closure) {
+                  //          if(!$rol_created[$rol]($value, $param, $data, $this)) {
+                  //             $temp = str_replace(":attribute", $field, @$messages[$rol]);
+                  //             $temp = str_replace(":values", implode(',', @$param), $temp);
+                  //             @$temp = str_replace(":data", $value, $temp);
 
-                              $this->fails["messages"][$field][] = $temp;
-                              $this->fails["failed"]  [$field][] = $rol;
-                           }
-                        }
-                        elseif(@$rol_created[$rol][0] instanceof closure) {
-                           if(!$rol_created[$rol][0]($value, $param, $data, $this)) {
-                              $temp = str_replace(":attribute", $field, @$messages[$rol]);
-                              $temp = str_replace(":values", implode(',', @$param), $temp);
-                              @$temp = str_replace(":data", $value, $temp);
+                  //             $this->fails["messages"][$field][] = $temp;
+                  //             $this->fails["failed"]  [$field][] = $rol;
+                  //          }
+                  //       }
+                  //       elseif(@$rol_created[$rol][0] instanceof closure) {
+                  //          if(!$rol_created[$rol][0]($value, $param, $data, $this)) {
+                  //             $temp = str_replace(":attribute", $field, @$messages[$rol]);
+                  //             $temp = str_replace(":values", implode(',', @$param), $temp);
+                  //             @$temp = str_replace(":data", $value, $temp);
 
-                              $this->fails["messages"][$field][] = $temp;
-                              $this->fails["failed"]  [$field][] = $rol;
-                           }
-                        }
-                        elseif(is_string(@$rol_created[$rol][0]) && (@$rol_created[$rol][1] instanceof closure)) {
-                           if(!$rol_created[$rol][1]($value, $param, $data, $this)) {
-                              $temp = str_replace(":attribute", $field, (@$messages[$rol] ? $messages[$rol] : $rol_created[$rol][0]));
-                              $temp = str_replace(":values", implode(',', @$param), $temp);
-                              @$temp = str_replace(":data", $value, $temp);
+                  //             $this->fails["messages"][$field][] = $temp;
+                  //             $this->fails["failed"]  [$field][] = $rol;
+                  //          }
+                  //       }
+                  //       elseif(is_string(@$rol_created[$rol][0]) && (@$rol_created[$rol][1] instanceof closure)) {
+                  //          if(!$rol_created[$rol][1]($value, $param, $data, $this)) {
+                  //             $temp = str_replace(":attribute", $field, (@$messages[$rol] ? $messages[$rol] : $rol_created[$rol][0]));
+                  //             $temp = str_replace(":values", implode(',', @$param), $temp);
+                  //             @$temp = str_replace(":data", $value, $temp);
 
-                              $this->fails["messages"][$field][] = $temp;
-                              $this->fails["failed"]  [$field][] = $rol;
-                           }
-                        }
-                     }
-                  }
+                  //             $this->fails["messages"][$field][] = $temp;
+                  //             $this->fails["failed"]  [$field][] = $rol;
+                  //          }
+                  //       }
+                  //    }
+                  // }
             // se eliminará pronto.. este bloque no se le hará mas modificaciones
                   break;
             }
@@ -723,13 +723,13 @@ class Validator {
     **/
    public function create($roles,&$error=null) {
       $key_rol = array_keys($roles);
-      if(is_string(@$key_rol[0]) && (@$roles[$key_rol[0]] instanceof closure)) {
+      if(is_string(@$key_rol[0]) && ( @$roles[$key_rol[0]] instanceof closure || gettype(@$roles[$key_rol[0]])==='object' )) {
          'is correct';
       }
-      elseif(is_string(@$key_rol[0]) && (@$roles[$key_rol[0]][0] instanceof closure)) {
+      elseif(is_string(@$key_rol[0]) && (@$roles[$key_rol[0]][0] instanceof closure || gettype(@$roles[$key_rol[0]][0])==='object')) {
          'is correct';
       }
-      elseif(is_string(@$key_rol[0]) && is_string(@$roles[$key_rol[0]][0]) && (@$roles[$key_rol[0]][1] instanceof closure)) {
+      elseif(is_string(@$key_rol[0]) && is_string(@$roles[$key_rol[0]][0]) && ( @$roles[$key_rol[0]][1] instanceof closure || gettype(@$roles[$key_rol[0]][1])==='object')) {
          'is correct';
       }
       elseif(is_array(@$roles[0])) {
@@ -875,3 +875,4 @@ class Validator {
    }
 
 }
+
