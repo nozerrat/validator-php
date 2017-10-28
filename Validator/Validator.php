@@ -326,7 +326,7 @@ class Validator {
                      $len = $value;
                      if (is_array($value)) {
                         $len = count($value);
-                     }elseif (!is_numeric($value)) {
+                     }elseif (is_string($value)) {
                         $len = strlen($value);
                      }
 
