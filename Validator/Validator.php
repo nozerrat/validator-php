@@ -597,26 +597,26 @@ class Validator {
                   }
                   break;
                default:
-                  $no_error = !false;
+                  $error = false;
                   $message = null;
                   if(@$this->roles_created[$rol] instanceof closure || gettype(@$this->roles_created[$rol])==='object') { // 'rol' => function();
-                     $no_error = $this->roles_created[$rol]($value, $param, $data, $this);
+                     $error = $this->roles_created[$rol]($value, $param, $data, $this);
                   }
                   elseif(@$this->roles_created[$rol][0] instanceof closure || gettype(@$this->roles_created[$rol][0])==='object') { // 'rol' => [function()];
-                     $no_error = $this->roles_created[$rol][0]($value, $param, $data, $this);
+                     $error = $this->roles_created[$rol][0]($value, $param, $data, $this);
                   }
                   elseif(is_string(@$this->roles_created[$rol][0]) && (@$this->roles_created[$rol][1] instanceof closure || gettype(@$this->roles_created[$rol][1])==='object')) { // 'rol' => ['message',function()];
-                     $message  = $this->roles_created[$rol][0];
-                     $no_error = $this->roles_created[$rol][1]($value, $param, $data, $this);
+                     $message = $this->roles_created[$rol][0];
+                     $error = $this->roles_created[$rol][1]($value, $param, $data, $this);
                   }
 
-                  if(is_array($no_error)){
-                     $temp_error = $no_error;
-                     $no_error   = @$temp_error['error'];
+                  if(is_array($error)) {
+                     $temp_error = $error;
+                     $error   = @$temp_error['error'];
                      if(@$temp_error['message'])
                         $message = @$temp_error['message'];
                   }
-                  if(!$no_error) {
+                  if($error) {
                      $temp_value = is_array($value) ? 'Array' : $value;
                      $message = $message ? $message : @$messages[$rol];
                      $temp = str_replace(":attribute", $field, $message);
@@ -627,43 +627,6 @@ class Validator {
                      $this->fails["failed"]  [$field][] = $rol;
                   }
 
-
-            // se eliminará pronto.. este bloque no se le hará mas modificaciones
-                  // elseif(is_array(@$this->roles_created[0])) {
-                  //    foreach($this->roles_created as $key_created => $rol_created) {
-                  //       if(@$rol_created[$rol] instanceof closure) {
-                  //          if(!$rol_created[$rol]($value, $param, $data, $this)) {
-                  //             $temp = str_replace(":attribute", $field, @$messages[$rol]);
-                  //             $temp = str_replace(":values", implode(',', @$param), $temp);
-                  //             @$temp = str_replace(":data", $value, $temp);
-
-                  //             $this->fails["messages"][$field][] = $temp;
-                  //             $this->fails["failed"]  [$field][] = $rol;
-                  //          }
-                  //       }
-                  //       elseif(@$rol_created[$rol][0] instanceof closure) {
-                  //          if(!$rol_created[$rol][0]($value, $param, $data, $this)) {
-                  //             $temp = str_replace(":attribute", $field, @$messages[$rol]);
-                  //             $temp = str_replace(":values", implode(',', @$param), $temp);
-                  //             @$temp = str_replace(":data", $value, $temp);
-
-                  //             $this->fails["messages"][$field][] = $temp;
-                  //             $this->fails["failed"]  [$field][] = $rol;
-                  //          }
-                  //       }
-                  //       elseif(is_string(@$rol_created[$rol][0]) && (@$rol_created[$rol][1] instanceof closure)) {
-                  //          if(!$rol_created[$rol][1]($value, $param, $data, $this)) {
-                  //             $temp = str_replace(":attribute", $field, (@$messages[$rol] ? $messages[$rol] : $rol_created[$rol][0]));
-                  //             $temp = str_replace(":values", implode(',', @$param), $temp);
-                  //             @$temp = str_replace(":data", $value, $temp);
-
-                  //             $this->fails["messages"][$field][] = $temp;
-                  //             $this->fails["failed"]  [$field][] = $rol;
-                  //          }
-                  //       }
-                  //    }
-                  // }
-            // se eliminará pronto.. este bloque no se le hará mas modificaciones
                   break;
             }
          }
@@ -685,28 +648,28 @@ class Validator {
     *******
     * $validador->create([
     *    'rol_email_1'=>function($value, $param, $data, $object){
-    *       return $no_error = true;
+    *       return $error = true;
     *    }
     *       ,'rol_email_1'=>function($value, $param, $data, $object){
-    *       return ['no_error'=>true];
+    *       return ['error'=>true];
     *    }
     *       ,'rol_email_1'=>function($value, $param, $data, $object){
-    *       return ['no_error'=>true, 'message'=>'message error'];
+    *       return ['error'=>true, 'message'=>'message error'];
     *    }
     *       ,'rol_email_1'=>[function($value, $param, $data, $object){
-    *       return $no_error = true;
+    *       return $error = true;
     *    }]
     *       ,'rol_email_1'=>['message error', function($value, $param, $data, $object){
-    *       return $no_error = true;
+    *       return $error = true;
     *    }]
     *       ,'rol_email_1'=>[function($value, $param, $data, $object){
-    *       return ['no_error'=>true];
+    *       return ['error'=>true];
     *    }]
     *       ,'rol_email_1'=>[function($value, $param, $data, $object){
-    *       return ['no_error'=>true, 'message'=>'message error'];
+    *       return ['error'=>true, 'message'=>'message error'];
     *    }]
     *       ,'rol_email_1'=>['message error', function($value, $param, $data, $object){
-    *       return ['no_error'=>true, 'message'=>'message error overwrite'];
+    *       return ['error'=>true, 'message'=>'message error overwrite'];
     *    }]
     * ]);
     *
