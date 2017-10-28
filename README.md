@@ -9,7 +9,7 @@ Para instalar con [Composer](https://getcomposer.org/), simplemente requiere la
 última versión de este paquete.
 
 ```bash
-composer require nozerrat/validator-php
+composer require nozerrat/validator-php dev-master
 ```
 
 ## Requerimientos
