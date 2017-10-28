@@ -60,7 +60,7 @@ class Validator {
          $this->fails = null;
 
       foreach ($rules as $field => $rule) {
-//    foreach ($data as $field => $value) {
+      // foreach ($data as $field => $value) {
 
          if(!isset($rules[$field])) continue;
 
@@ -97,7 +97,7 @@ class Validator {
                   if ($value!='') {
                      // ASCII lATIN1
                      if (!preg_match('/^[a-zA-Zá-üÁ-Ü\s]*$/', $value)) {
-                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol])));
+                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol])));
                         $temp = str_replace(":data", $value, $temp);
 
                         $this->fails["messages"][$field][] = $temp;
@@ -109,7 +109,7 @@ class Validator {
                   if ($value!='') {
                      // ASCII lATIN1
                      if (!preg_match("/^[0-9a-zA-Zá-üÁ-Ü\s_\-\.,\(\)]*$/", $value)) {
-                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol])));
+                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol])));
                         $temp = str_replace(":data", $value, $temp);
 
                         $this->fails["messages"][$field][] = $temp;
@@ -121,7 +121,7 @@ class Validator {
                   if ($value!='') {
                      // ASCII lATIN1
                      if (!preg_match("/^[0-9a-zA-Zá-üÁ-Ü\s\.]*$/", $value)) {
-                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol])));
+                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol])));
                         $temp = str_replace(":data", $value, $temp);
 
                         $this->fails["messages"][$field][] = $temp;
@@ -132,7 +132,7 @@ class Validator {
                case 'array':
                   if ($value!='') {
                      if (!is_array($value)) {
-                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol])));
+                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol])));
                         $temp = str_replace(":data", $value, $temp);
 
                         $this->fails["messages"][$field][] = $temp;
@@ -162,11 +162,11 @@ class Validator {
 
                      if (!count($param) || @$fail_max || @$fail_min ) {
                         if (is_array($value)) {
-                           $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol]['array'])));
+                           $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol]['array'])));
                         }elseif (!is_numeric($value)) {
-                           $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol]['string'])));
+                           $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol]['string'])));
                         }else{
-                           $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol]['numeric'])));
+                           $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol]['numeric'])));
                         }
 
                         $temp = str_replace(":min", @$param[0]?@$param[0]:0, $temp);
@@ -188,7 +188,7 @@ class Validator {
 
                      if ($format['error_count']) {
 
-                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol])));
+                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol])));
                         $temp = str_replace(":format", @$param[0]?@$param[0]:0, $temp);
                         $temp = str_replace(":data", $value, $temp);
 
@@ -215,7 +215,7 @@ class Validator {
                         $this->fails["messages"][$field]   = $v->fails["messages"][$field];
                         $this->fails["failed"]  [$field]   = $v->fails["failed"]  [$field];
                      }else{
-                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol])));
+                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol])));
                         $temp = str_replace(":other", @$param[0], $temp);
                         $temp = str_replace(":data", $value, $temp);
 
@@ -228,7 +228,7 @@ class Validator {
                   if (!is_numeric(@$param[0])) throw new Exception(" El parametro del rol {$rol} es incorrecto ", 1);
                   if ($value!='') {
                      if (!preg_match("/^[0-9]*$/", $value) || !count($param) || strlen($value) != @$param[0]) {
-                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol])));
+                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol])));
                         $temp = str_replace(":digits",    @$param[0]?@$param[0]:0, $temp);
                         $temp = str_replace(":data", $value, $temp);
 
@@ -248,7 +248,7 @@ class Validator {
 
                      if (@$fail_max || @$fail_min ) {
 
-                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol])));
+                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol])));
 
                         $temp = str_replace(":min", @$param[0]?@$param[0]:0, $temp);
                         $temp = str_replace(":max", @$param[1]?@$param[1]:0, $temp);
@@ -263,7 +263,7 @@ class Validator {
                   if ($value!='') {
                      $value=filter_var($value, FILTER_SANITIZE_EMAIL);
                      if(!filter_var($value, FILTER_VALIDATE_EMAIL)) {
-                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol])));
+                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol])));
                         $temp = str_replace(":data", $value, $temp);
 
                         $this->fails["messages"][$field][] = $temp;
@@ -275,7 +275,7 @@ class Validator {
                case 'image':
                   if ($value!='') {
                      if (!preg_match("/.*(\.jpg)|(\.jpeg)|(\.png)|(\.bmp)|(\.gif)$/", $value)) {
-                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol])));
+                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol])));
                         $temp = str_replace(":data", $value, $temp);
 
                         $this->fails["messages"][$field][] = $temp;
@@ -288,7 +288,7 @@ class Validator {
                   if ($value!='') {
                      if (!is_numeric(array_search(strtolower($value), array_map( function ($v){return strtolower($v);}, $param)))) {
 
-                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol])));
+                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol])));
                         $temp = str_replace(":values", implode(',', @$param), $temp);
                         $temp = str_replace(":data", $value, $temp);
 
@@ -300,7 +300,7 @@ class Validator {
                case 'integer':
                   if ($value!='') {
                      if (!preg_match("/^[0-9]*$/", $value)) {
-                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol])));
+                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol])));
                         $temp = str_replace(":data", $value, $temp);
 
                         $this->fails["messages"][$field][] = $temp;
@@ -311,7 +311,7 @@ class Validator {
                case 'ip':
                   if ($value!='') {
                      if (!preg_match("/^([0-9]){1,3}\.([0-9]){1,3}\.([0-9]){1,3}\.([0-9]){1,3}$/", $value)) {
-                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol])));
+                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol])));
                         $temp = str_replace(":data", $value, $temp);
 
                         $this->fails["messages"][$field][] = $temp;
@@ -332,11 +332,11 @@ class Validator {
 
                      if (!count($param) || ($len > @$param[0])) {
                         if (is_array($value)) {
-                           $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol]['array'])));
-                        }elseif (!is_numeric($value)) {
-                           $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol]['string'])));
+                           $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol]['array'])));
+                        }elseif (is_string($value)) {
+                           $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol]['string'])));
                         }else{
-                           $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol]['numeric'])));
+                           $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol]['numeric'])));
                         }
 
                         $temp = str_replace(":max"      , @$param[0]?@$param[0]:0, $temp);
@@ -354,7 +354,7 @@ class Validator {
                      $param = implode('|', $param);
 
                      if (!preg_match("/.*".$param."$/", $value)) {
-                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol])));
+                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol])));
                         $temp = str_replace(":values", str_replace('|', ',', @$param), $temp);
                         $temp = str_replace(":data", $value, $temp);
 
@@ -376,11 +376,11 @@ class Validator {
                      
                      if (!count($param) || ($len < @$param[0])) {
                         if (is_array($value)) {
-                           $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol]['array'])));
-                        }elseif (!is_numeric($value)) {
-                           $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol]['string'])));
+                           $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol]['array'])));
+                        }elseif (is_string($value)) {
+                           $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol]['string'])));
                         }else{
-                           $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol]['numeric'])));
+                           $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol]['numeric'])));
                         }
 
                         $temp = str_replace(":min"      , @$param[0]?@$param[0]:0, $temp);
@@ -395,7 +395,7 @@ class Validator {
                   if (!@$param[0]) throw new Exception(" El parametro del rol {$rol} es incorrecto ", 1);
                   if ($value!='') {
                      if (is_numeric(array_search(strtolower($value), array_map( function ($v){return strtolower($v);}, $param)))) {
-                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol])));
+                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol])));
                         $temp = str_replace(":values", implode(',', @$param), $temp);
                         $temp = str_replace(":data", $value, $temp);
 
@@ -407,7 +407,7 @@ class Validator {
                case 'numeric':
                   if ($value!='') {
                      if ( !is_numeric( str_replace( ',','.', $value ) ) ) {
-                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol])));
+                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol])));
                         $temp = str_replace(":data", $value, $temp);
 
                         $this->fails["messages"][$field][] = $temp;
@@ -419,7 +419,7 @@ class Validator {
                   if (@$param[0]=='') throw new Exception(" El parametro del rol {$rol} es incorrecto ", 1);
                   if ($value!='') {
                      if (!preg_match($param[0], $value)) {
-                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol])));
+                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol])));
                         $temp = str_replace(":data", $value, $temp);
 
                         $this->fails["messages"][$field][] = $temp;
@@ -429,7 +429,7 @@ class Validator {
                   break;
                case 'required':
                   if ($value==="" || $value===false || $value===null) {
-                     $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol])));
+                     $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol])));
                      $temp = str_replace(":data", $value, $temp);
 
                      $this->fails["messages"][$field][] = $temp;
@@ -452,7 +452,7 @@ class Validator {
                   eval('$eval = '.join('||', $str).';');
 
                   if ( ($value==="" || $value===false || $value===null) && $eval ) {
-                     $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol])));
+                     $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol])));
                      $temp = str_replace(":other", @$param[0], $temp);
                      $temp = str_replace(":values", @$param[1], $temp);
                      $temp = str_replace(":data", $value, $temp);
@@ -477,7 +477,7 @@ class Validator {
                   eval('$eval = '.join('||', $str).';');
 
                   if ( ($value==="" || $value===false || $value===null) && $eval ) {
-                     $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol])));
+                     $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol])));
                      $temp = str_replace(":other", @$param[0], $temp);
                      $temp = str_replace(":values", @$param[1], $temp);
                      $temp = str_replace(":data", $value, $temp);
@@ -489,7 +489,7 @@ class Validator {
                case 'required_with':
                   if (@$param[0]=='') throw new Exception(" El parametro del rol {$rol} es incorrecto ", 1);
                   if (!is_numeric(array_search(strtolower($value), array_map( function ($v){return strtolower($v);}, $param)))) {
-                     $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol])));
+                     $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol])));
                      $temp = str_replace(":values", implode(',', @$param), $temp);
                      $temp = str_replace(":data", $value, $temp);
 
@@ -500,7 +500,7 @@ class Validator {
                case 'required_without':
                   if (@$param[0]=='') throw new Exception(" El parametro del rol {$rol} es incorrecto ", 1);
                   if (is_numeric(array_search(strtolower($value), array_map( function ($v){return strtolower($v);}, $param)))) {
-                     $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol])));
+                     $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol])));
                      $temp = str_replace(":values", implode(',', @$param), $temp);
                      $temp = str_replace(":data", $value, $temp);
 
@@ -522,7 +522,7 @@ class Validator {
                         $this->fails["messages"][$field]   = $v->fails["messages"][$field];
                         $this->fails["failed"]  [$field]   = $v->fails["failed"]  [$field];
                      }else{
-                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol])));
+                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol])));
                         $temp = str_replace(":other", @$param[0], $temp);
                         $temp = str_replace(":data", $value, $temp);
 
@@ -544,11 +544,11 @@ class Validator {
 
                      if (!count($param) || ($len) != (@$param[0])) {
                         if (is_array($value)) {
-                           $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol]['array'])));
+                           $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol]['array'])));
                         }elseif (!is_numeric($value)) {
-                           $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol]['string'])));
+                           $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol]['string'])));
                         }else{
-                           $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol]['numeric'])));
+                           $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol]['numeric'])));
                         }
 
                         $temp = str_replace(":size", @$param[0]?@$param[0]:0, $temp);
@@ -563,7 +563,7 @@ class Validator {
                   if ($value!='') {
                      // ASCII lATIN1
                      // if ($value) {
-                     //    $this->fails["messages"][$field][] = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol])));
+                     //    $this->fails["messages"][$field][] = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol])));
                      //    $this->fails["failed"]  [$field][] = $rules[$field][$key_rol];
                      // }
                   }
@@ -572,7 +572,7 @@ class Validator {
                case 'url':
                   if ($value!='') {
                      if (!filter_var($value, FILTER_VALIDATE_URL)) {
-                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol])));
+                        $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol])));
                         $temp = str_replace(":data", $value, $temp);
 
                         $this->fails["messages"][$field][] = $temp;
@@ -585,7 +585,7 @@ class Validator {
                      $strings = explode(' ',$value);
                      foreach($strings as $key => $string) {
                         if(in_array(strtolower($string), $this->sqlStatement)) {
-                           $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol])));
+                           $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : @$this->messages[$rol])));
                            $temp = str_replace(":values", strtoupper($string), $temp);
                            $temp = str_replace(":data", $value, $temp);
 
@@ -808,6 +808,17 @@ class Validator {
    public function set($field, $msg) {
       @$this->fails['messages'][$field][] = str_replace(":attribute", $field, $msg);
       @$this->fails["failed"]  [$field][] = true;
+   }
+
+   /**
+    * aplica un mensaje a un rol ya predefinido
+    * @author Carlos Garcia <garlos.figueroa@gmail.com>
+    * @param String  $rol
+    * @param String  $msg
+    * @return Array
+    **/
+   public function setMessage($rol, $msg) {
+      @$this->messages[$rol] = $msg;
    }
 
    /**
