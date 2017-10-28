@@ -370,9 +370,10 @@ class Validator {
                      $len = $value;
                      if (is_array($value)) {
                         $len = count($value);
-                     }elseif (!is_numeric($value)) {
+                     }elseif (is_string($value)) {
                         $len = strlen($value);
                      }
+                     
                      if (!count($param) || ($len < @$param[0])) {
                         if (is_array($value)) {
                            $temp = str_replace(":attribute", $field, (@$messages[$rol] ? @$messages[$rol] : (@$messages[$field] ? @$messages[$field] : $this->messages[$rol]['array'])));
